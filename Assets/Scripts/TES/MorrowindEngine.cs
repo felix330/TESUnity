@@ -829,9 +829,13 @@ namespace TESUnity
 			player.transform.position = position;
 
 			// Create the player camera.
-			playerCamera = CreatePlayerCamera(position);
+			/*playerCamera = CreatePlayerCamera(position);
 			playerCamera.transform.localPosition = Vector3.zero;
-			playerCamera.transform.SetParent(cameraPoint.transform, false);
+			playerCamera.transform.SetParent(cameraPoint.transform, false);*/
+
+			//Set VR Camera
+			playerCamera = GameObject.Find("SteamCamera").transform.Find("Camera (head)").gameObject;
+			Debug.Log ("Player cam " + playerCamera);
 
 			// Create the player's lantern.
 			var lantern = new GameObject("Lantern");

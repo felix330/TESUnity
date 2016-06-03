@@ -37,6 +37,13 @@ namespace TESUnity
 
 		public new GameObject camera;
 		public GameObject lantern;
+		public GameObject steamVRCam;
+		public GameObject steamVRHeadCam;
+		public GameObject rightController;
+		public GameObject leftController;
+
+		SteamVR_TrackedObject ctR;
+		SteamVR_TrackedObject ctL;
 
 		private CapsuleCollider capsuleCollider;
 		private Rigidbody rigidbody;
@@ -48,10 +55,38 @@ namespace TESUnity
 		{
 			capsuleCollider = GetComponent<CapsuleCollider>();
 			rigidbody = GetComponent<Rigidbody>();
+
+
+			//Temporary change spawn (Felix)
+			transform.position = new Vector3 (0, 20f, 0);
+
+			steamVRCam = GameObject.Find ("SteamCamera");
+			steamVRHeadCam = GameObject.Find ("Camera (head)");
+
+			steamVRCam.transform.position = new Vector3 (0, 20f, 0);
+			transform.parent = steamVRHeadCam.transform;
+			transform.localPosition = new Vector3 (0, 0, 0);
+			//transform.parent = steamVRCam.transform;
+			//transform.localPosition = new Vector3 (0, 0, 0);
+
+			rightController = GameObject.Find ("Controller (right)");
+			leftController = GameObject.Find ("Controller (left)");
+			ctR = rightController.GetComponent<SteamVR_TrackedObject> ();
+			ctL = leftController.GetComponent<SteamVR_TrackedObject> ();
+
+
+
 		}
 		private void Update()
 		{
 			Rotate();
+
+			SteamVR_Controller.Device deviceL = SteamVR_Controller.Input ((int)ctL.index);
+			SteamVR_Controller.Device deviceR = SteamVR_Controller.Input ((int)ctR.index);
+
+			Debug.Log (deviceL.GetAxis (Valve.VR.EVRButtonId.k_EButton_SteamVR_Touchpad));
+
+
 
 			if(Input.GetKeyDown(KeyCode.Tab))
 			{
@@ -88,7 +123,7 @@ namespace TESUnity
 
 		private void Rotate()
 		{
-			var eulerAngles = new Vector3(camera.transform.localEulerAngles.x, transform.localEulerAngles.y, 0);
+			/*var eulerAngles = new Vector3(camera.transform.localEulerAngles.x, transform.localEulerAngles.y, 0);
 
 			// Make eulerAngles.x range from -180 to 180 so we can clamp it between a negative and positive angle.
 			if(eulerAngles.x > 180)
@@ -102,7 +137,9 @@ namespace TESUnity
 			eulerAngles.y = Mathf.Repeat(eulerAngles.y + deltaMouse.x, 360);
 
 			camera.transform.localEulerAngles = new Vector3(eulerAngles.x, 0, 0);
-			transform.localEulerAngles = new Vector3(0, eulerAngles.y, 0);
+			transform.localEulerAngles = new Vector3(0, eulerAngles.y, 0);*/
+
+			//transform.rotation = steamVRHeadCam.transform.rotation;
 		}
 		private void SetVelocity()
 		{
