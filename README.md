@@ -11,7 +11,7 @@ Getting Started
 
 **Big endian CPUs are currently not supported!**
 
-To get started, download the source code as a ZIP file, extract it, and open the TESUnity folder in Unity.
+To get started, download the source code as a ZIP file, extract it, and open the TESUnity folder in Unity. Please make sure SteamVR is running and the controllers are connected before you start the game.
 
 
 Controls
