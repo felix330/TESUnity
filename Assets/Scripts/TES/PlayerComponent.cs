@@ -44,6 +44,8 @@ namespace TESUnity
 
 		SteamVR_TrackedObject ctR;
 		SteamVR_TrackedObject ctL;
+		SteamVR_Controller.Device deviceL;
+		SteamVR_Controller.Device deviceR;
 
 		private CapsuleCollider capsuleCollider;
 		private Rigidbody rigidbody;
@@ -79,21 +81,35 @@ namespace TESUnity
 		}
 		private void Update()
 		{
-			Rotate();
+			//Rotate();
 
-			SteamVR_Controller.Device deviceL = SteamVR_Controller.Input ((int)ctL.index);
-			SteamVR_Controller.Device deviceR = SteamVR_Controller.Input ((int)ctR.index);
+			deviceL = SteamVR_Controller.Input ((int)ctL.index);
+			deviceR = SteamVR_Controller.Input ((int)ctR.index);
 
 			Debug.Log (deviceL.GetAxis (Valve.VR.EVRButtonId.k_EButton_SteamVR_Touchpad));
 
 
 
-			if(Input.GetKeyDown(KeyCode.Tab))
+			/*if(Input.GetKeyDown(KeyCode.Tab))
 			{
 				isFlying = !isFlying;
+			}*/
+
+
+			transform.parent.parent.position += transform.parent.forward*deviceL.GetAxis (Valve.VR.EVRButtonId.k_EButton_SteamVR_Touchpad).y;
+			transform.parent.parent.position += transform.parent.right*deviceL.GetAxis (Valve.VR.EVRButtonId.k_EButton_SteamVR_Touchpad).x;
+
+			if (deviceR.GetPressDown (Valve.VR.EVRButtonId.k_EButton_SteamVR_Trigger)) {
+				Vector3 v = new Vector3 (0, 90, 0);
+				transform.parent.parent.localEulerAngles += v;
 			}
 
-			if(isGrounded && !isFlying && Input.GetKeyDown(KeyCode.Space))
+			if (deviceL.GetPressDown (Valve.VR.EVRButtonId.k_EButton_SteamVR_Trigger)) {
+				Vector3 v = new Vector3 (0, -90, 0);
+				transform.parent.parent.localEulerAngles += v;
+			}
+
+			/*if(isGrounded && !isFlying && Input.GetKeyDown(KeyCode.Space))
 			{
 				var newVelocity = rigidbody.velocity;
 				newVelocity.y = 5;
@@ -105,8 +121,11 @@ namespace TESUnity
 			{
 				var light = lantern.GetComponent<Light>();
 				light.enabled = !light.enabled;
-			}
+			}*/
 		}
+
+
+		/*
 		private void FixedUpdate()
 		{
 			isGrounded = CalculateIsGrounded();
@@ -123,7 +142,7 @@ namespace TESUnity
 
 		private void Rotate()
 		{
-			/*var eulerAngles = new Vector3(camera.transform.localEulerAngles.x, transform.localEulerAngles.y, 0);
+			var eulerAngles = new Vector3(camera.transform.localEulerAngles.x, transform.localEulerAngles.y, 0);
 
 			// Make eulerAngles.x range from -180 to 180 so we can clamp it between a negative and positive angle.
 			if(eulerAngles.x > 180)
@@ -137,7 +156,7 @@ namespace TESUnity
 			eulerAngles.y = Mathf.Repeat(eulerAngles.y + deltaMouse.x, 360);
 
 			camera.transform.localEulerAngles = new Vector3(eulerAngles.x, 0, 0);
-			transform.localEulerAngles = new Vector3(0, eulerAngles.y, 0);*/
+			transform.localEulerAngles = new Vector3(0, eulerAngles.y, 0);
 
 			//transform.rotation = steamVRHeadCam.transform.rotation;
 		}
@@ -174,15 +193,9 @@ namespace TESUnity
 			// Calculate the local movement direction.
 			var direction = Vector3.zero;
 
-			if(Input.GetKey(KeyCode.W))
-			{
-				direction += Vector3.forward;
-			}
-
-			if(Input.GetKey(KeyCode.A))
-			{
-				direction += Vector3.left;
-			}
+			direction += Vector3.forward*deviceL.GetAxis (Valve.VR.EVRButtonId.k_EButton_SteamVR_Touchpad).x;
+			direction += Vector3.right*deviceL.GetAxis (Valve.VR.EVRButtonId.k_EButton_SteamVR_Touchpad).x;
+			
 
 			if(Input.GetKey(KeyCode.S))
 			{
@@ -232,6 +245,6 @@ namespace TESUnity
 			var sphereCastDistance = (capsuleCollider.height / 2);
 			
 			return Physics.SphereCast(new Ray(playerCenter, -transform.up), castedSphereRadius, sphereCastDistance);
-		}
+		}*/
 	}
 }
