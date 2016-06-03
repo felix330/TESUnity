@@ -1,7 +1,7 @@
-*TESUnity*
+*TESUnity VR*
 ==========
 
-World viewers for Elder Scrolls games in the Unity game engine.
+World viewer for Elder Scrolls games in the Unity game engine. This is an experimental VR implementation for Open VR by felix330. All credit for TESUnity goes to ColeDeanShepherd.
 
 
 Getting Started
@@ -17,34 +17,8 @@ To get started, download the source code as a ZIP file, extract it, and open the
 Controls
 --------
 
-W, A, S, D - Move
+Right now, only flying is implemented as a movement method. Walking will come later. I don't recommend trying the current version if you are prone to motion sickness.
 
-Shift - Sprint
+Left Touchpad to control flight direction based on where you look.
 
-Left Ctrl. - Walk
-
-Space - Jump
-
-E - Interact
-
-Tab - Toggle Flight Mode
-
-L - Toggle Lantern
-
-
-Contribute
-----------
-
-Bugs and feature requests are listed on the [GitHub issues page](https://github.com/ColeDeanShepherd/TESUnity/issues). Feel free to fork the source code and contribute, or use it in any way that falls under the [MIT License](https://github.com/ColeDeanShepherd/TESUnity/blob/master/LICENSE.txt).
-
-
-Morrowind Data Format Resources
--------------------------------
-
-[ESM File Format Specification](http://www.mwmythicmods.com/argent/tech/es_format.html)
-
-[BSA File Format Specification](http://www.uesp.net/wiki/Tes3Mod:BSA_File_Format)
-
-[NIF File Format Specification](https://github.com/niftools/nifxml/blob/develop/nif.xml)
-
-[NIF Viewer/Data Inspector](https://github.com/niftools/nifskope)
+Left + Right triggers for 90° comfort-turning
